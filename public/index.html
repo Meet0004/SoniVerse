@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Editor</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Collaborative Editor</h2>
+    <textarea id="editor" rows="10" cols="50"></textarea>  <br>
+    <select id="language">
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+    </select>
+
+    <button onclick="compileCode()">Run Code</button>
+    <pre id="output"></pre>
+    <script src="script.js"></script>
+</body>
+</html>
