@@ -1,34 +1,47 @@
-const socket = io("https://7bc2-2401-4900-1c07-6277-b566-378f-56e-b1f4.ngrok-free.app");
-const editor = document.getElementById("editor");
-
-let roomId = localStorage.getItem("roomId") || generateRoomId();
-socket.emit("join_room", roomId);
-
-socket.on("load_text", (data) => {
-    editor.value = data;
-});
-
-editor.addEventListener("input", () => {
-    socket.emit("text_change", { roomId, content: editor.value });
-});
-
-socket.on("text_change", (content) => {
-    if (editor.value !== content) editor.value = content;
-});
-
-function generateRoomId() {
-    return "room-" + Math.random().toString(36).substr(2, 9);
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
-
-function startCollab() {
-    const link = `${window.location.origin}?room=${roomId}`;
-    navigator.clipboard.writeText(link);
-    alert("Share this link: " + link);
+.container {
+    text-align: center;
 }
-
-const urlParams = new URLSearchParams(window.location.search);
-const urlRoomId = urlParams.get("room");
-if (urlRoomId) {
-    roomId = urlRoomId;
-    socket.emit("join_room", roomId);
+.call-controls {
+    margin: 20px 0;
+}
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+#startCall {
+    background-color: #4CAF50;
+    color: white;
+}
+#endCall {
+    background-color: #f44336;
+    color: white;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+.popup button {
+    margin: 10px;
+}
+#status {
+    margin: 10px 0;
+    font-weight: bold;
 }
