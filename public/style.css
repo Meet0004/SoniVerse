@@ -1,0 +1,34 @@
+const socket = io("https://7bc2-2401-4900-1c07-6277-b566-378f-56e-b1f4.ngrok-free.app");
+const editor = document.getElementById("editor");
+
+let roomId = localStorage.getItem("roomId") || generateRoomId();
+socket.emit("join_room", roomId);
+
+socket.on("load_text", (data) => {
+    editor.value = data;
+});
+
+editor.addEventListener("input", () => {
+    socket.emit("text_change", { roomId, content: editor.value });
+});
+
+socket.on("text_change", (content) => {
+    if (editor.value !== content) editor.value = content;
+});
+
+function generateRoomId() {
+    return "room-" + Math.random().toString(36).substr(2, 9);
+}
+
+function startCollab() {
+    const link = `${window.location.origin}?room=${roomId}`;
+    navigator.clipboard.writeText(link);
+    alert("Share this link: " + link);
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const urlRoomId = urlParams.get("room");
+if (urlRoomId) {
+    roomId = urlRoomId;
+    socket.emit("join_room", roomId);
+}
