@@ -9,10 +9,10 @@ This project is a **real-time collaborative code editor** that supports:
 - Peer-to-peer audio calls using WebRTC  
 
 ## 🚀 Features
-✅ Real-time text synchronization  
-✅ Multi-language code compilation  
-✅ WebRTC-based voice calling  
-✅ Simple and lightweight UI  
+- Real-time text synchronization  
+- Multi-language code compilation  
+- WebRTC-based voice calling  
+- Simple and lightweight UI  
 
 ## 🛠️ Technologies Used
 - **Frontend**: HTML, CSS, JavaScript  
