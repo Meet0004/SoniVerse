@@ -1,6 +1,6 @@
 Here's the complete `README.md` file in proper markdown format:  
 
-# Real-Time Collaborative Code Editor with WebRTC Calls
+# Collaborative Code Editor
 
 This project is a **real-time collaborative code editor** that supports:
 - Collaborative - Real-time code synchronization  
