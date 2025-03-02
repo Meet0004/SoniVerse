@@ -3,7 +3,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const axios = require("axios");
-const helmet = require('helmet'); // Import Helmet for security
+const helmet = require('helmet'); // for security
 
 const app = express();
 app.use(cors());
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "script-src 'self' 'unsafe-eval' 'unsafe-inline'");
     next();
 });
-// Use Helmet to set appropriate CSP headers
+// csp headers
 app.use(
     helmet({
         contentSecurityPolicy: {
@@ -35,11 +35,9 @@ app.use(
 
 server.listen(5000, () => console.log("Server running on port 5000"));
 
-// Store text data per room
-const rooms = {};
-let textData = "";
-// Store connected users
-const users = {};
+const rooms = {}; // store text data per room
+let textData = ""; 
+const users = {}; // store connected users
 
 io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
