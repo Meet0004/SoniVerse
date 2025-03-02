@@ -2,24 +2,17 @@ Here's the complete `README.md` file in proper markdown format:
 
 # Real-Time Collaborative Code Editor with WebRTC Calls
 
-This project is a **real-time collaborative code editor** that supports:  
-- Live code editing using WebSockets  
-- Code compilation via an API  
-- Peer-to-peer audio calls using WebRTC  
+This project is a **real-time collaborative code editor** that supports:
+- Collaborative - Real-time code synchronization  
+- Compilaton - Multi-language code compilation (Java and Python)
+- Voice chat - WebRTC-based voice calling  
+- text chat - Chat box between
+- Save code - File management (local)
+as of 02-03-2025
 
-## 🚀 Features
-- Real-time text synchronization  
-- Multi-language code compilation  
-- WebRTC-based voice calling  
-- Simple and lightweight UI  
-
-## 🛠️ Technologies Used
-- **Frontend**: HTML, CSS, JavaScript  
-- **Backend**: Node.js, Express.js, WebSockets (Socket.IO)  
-- **WebRTC**: Peer-to-peer audio calling  
-- **Deployment**: Ngrok for tunneling  
-
-## 📂 Project Structure
+## Project Structure
+```
+/node_modules
 /public
   ├── index.html       # Frontend UI
   ├── style.css        # Styling
@@ -29,13 +22,13 @@ This project is a **real-time collaborative code editor** that supports:
   ├── server.js        # Node.js server
 README.md              # Project documentation
 package.json           # Dependencies
-
+```
 
 ### 1 download xip file and extract
 
 ### 2️ Install dependencies (for backend)
 ```sh
-npm i socket.io express helmet http axios cors
+npm install
 ```
 ### 2️ Install dependencies (for backend)
 ```sh
@@ -47,11 +40,12 @@ npm i socket.io express helmet http axios cors
 node server.js
 ```
 
-### 4 Start Ngrok (if using tunneling)
+### 4 Start Ngrok in cmd (folder)
 ```sh
 ngrok http 5000
 ```
-- Replace the `ngrok` link in `script.js` and `server.js`with your generated link.
+
+ ### 5 Replace the `ngrok` link in `script.js` and `server.js`with your generated link.
 
 ## License
 This project is **MIT Licensed**.
