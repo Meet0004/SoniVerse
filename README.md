@@ -30,13 +30,13 @@ package.json          # Dependencies
 package-lock.json
 ```
 
-### 1 download xip file and extract
+### 1 download zip file and extract
 
 ### 2️ Install dependencies (for backend)
 ```sh
 npm install
 ```
-### 2️ Install dependencies (for backend)
+### 2️ Install packages (for backend)
 ```sh
 npm i express http socket.io cors axios helmet ngrok fs path nodemon
 ```
@@ -46,6 +46,8 @@ npm i express http socket.io cors axios helmet ngrok fs path nodemon
 node server.js
 ```
 ### 4 collabration link will be in console
+
+### 5 Project uses node JS v20.18.02 and npm 11.1.0
 
 ## License
 This project is **MIT Licensed**.
