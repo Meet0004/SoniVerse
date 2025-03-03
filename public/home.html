@@ -1,0 +1,50 @@
+<!-- public/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Code Editor</title>
+  <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Collaborative Code Editor</h1>
+    
+    <div class="error" id="error-message">Invalid session code. Please try again.</div>
+    
+    <p>Create a new coding session or join an existing one.</p>
+    
+    <button class="button" id="create-button">Generate New Session</button>
+    
+    <div class="code-display" id="code-display">
+      <p>Your 2-digit verification code:</p>
+      <div class="code" id="code-value">--</div>
+      <p>Share this link with others:</p>
+      <div class="link" id="share-link"></div>
+      <button class="button" id="enter-editor">Enter Editor</button>
+    </div>
+    
+    <div class="or-divider">
+      <span>OR</span>
+    </div>
+    
+    <div class="input-group">
+      <label for="join-code">Enter code to join:</label>
+      <input type="text" id="join-code" maxlength="2" pattern="[0-9]{2}">
+      <button class="join-button" id="join-button">Join</button>
+    </div>
+    
+    <div class="instructions">
+      <p><strong>How it works:</strong></p>
+      <ol>
+        <li>Generate a new session or enter an existing code</li>
+        <li>Share your unique link with collaborators</li>
+        <li>Work together in real-time on the same code</li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="/js/home.js"></script>
+</body>
+</html>
