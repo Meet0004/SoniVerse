@@ -8,6 +8,26 @@
     <link rel="stylesheet" href="/css/editor.css">
 </head>
 <body>
+    <div class="header">
+        <div>
+          <span>Collaborative Code Editor</span>
+          <span class="status disconnected" id="connection-status">Disconnected</span>
+        </div>
+        <div>
+          <span class="users-count" id="users-count">Users: 1</span>
+        </div>
+      </div>
+      
+      <div class="session-info">
+        <div>
+          Session code: <span class="session-code" id="session-code"></span>
+        </div>
+        <div class="copy-container">
+          <button class="copy-link" id="copy-link">Copy Share Link</button>
+          <span class="copied" id="copied-message">Copied!</span>
+        </div>
+    </div>
+    
     <h2>Collaborative Editor</h2>
     <textarea id="editor" rows="10" cols="50" class="code-editor"></textarea> <br><br>
     <br>
