@@ -47,7 +47,11 @@ node server.js
 ```
 ### 4 collabration link will be in console
 
-### 5 Project uses node JS v20.18.02 and npm 11.1.0
+### 5 Project uses 
+- node v20.18.02
+- express v4.16.1
+- npm v11.1.0
+- ngrok v3.19.1
 
 ## License
 This project is **MIT Licensed**.
