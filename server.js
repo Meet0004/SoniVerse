@@ -195,7 +195,7 @@ io.on('connection', (socket) => {
         }
     });
     
-    // --------------------- call ---------------------
+    // --------------------- call events ---------------------
     socket.on('offer', (offer) => {
         socket.broadcast.emit('offer', offer);
     });
