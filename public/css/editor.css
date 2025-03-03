@@ -253,3 +253,77 @@ button {
     padding: 10px;
     font-family: monospace;
 }
+
+
+
+/* headeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr*/
+
+.header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.code-container {
+  height:30%;
+  position: relative;
+}
+.CodeMirror {
+  height: 100%;
+  font-size: 16px;
+}
+.status {
+  font-size: 14px;
+  margin-left: 20px;
+}
+.connected {
+  color: #2ecc71;
+}
+.disconnected {
+  color: #e74c3c;
+}
+.users-count {
+  font-size: 14px;
+  margin-right: 10px;
+}
+select {
+  padding: 4px;
+  margin-right: 10px;
+}
+.session-info {
+  background-color: #f3f4f6;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+.session-code {
+  font-weight: bold;
+  color: #4285f4;
+}
+.copy-link {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.copy-link:hover {
+  background-color: #3367d6;
+}
+.copied {
+  margin-left: 8px;
+  color: #34a853;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.copy-container {
+  display: flex;
+  align-items: center;
+}
