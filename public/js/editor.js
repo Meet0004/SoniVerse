@@ -20,6 +20,94 @@ editor.addEventListener("input", () => {
     socket.emit("text_change", editor.value);
 });
 
+
+// Initialize variables
+let isUpdating = false;
+const statusElem = document.getElementById('connection-status');
+const usersCountElem = document.getElementById('users-count');
+const sessionCodeElem = document.getElementById('session-code');
+const copyLinkBtn = document.getElementById('copy-link');
+const copiedMessage = document.getElementById('copied-message');
+
+// Get session code from URL
+const path = window.location.pathname;
+const sessionCode = path.split('/').pop();
+
+// Display session code
+sessionCodeElem.textContent = sessionCode;        // DONE
+
+// Copy share link functionality
+copyLinkBtn.addEventListener('click', () => {    // DONE
+  const shareLink = window.location.href;
+  navigator.clipboard.writeText(shareLink).then(() => {
+    copiedMessage.style.opacity = '1';
+    setTimeout(() => {
+      copiedMessage.style.opacity = '0';
+    }, 2000);
+  });
+});
+
+// Initialize CodeMirror
+// editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+//   lineNumbers: true,
+//   theme: 'monokai',
+//   mode: 'python',
+//   indentUnit: 2,
+//   tabSize: 2,
+//   lineWrapping: true,
+//   autofocus: true
+// });
+
+// Language selector
+language.addEventListener('change', (e) => {    
+  const lang= e.target.value;
+  editor.setOption('mode', lang);
+  
+  // Notify other users of language change
+  socket.emit('language-change', lang);
+});
+
+
+// Join session when connected
+socket.on('connect', () => {
+  statusElem.textContent = 'Connected';
+  statusElem.classList.remove('disconnected');
+  statusElem.classList.add('connected');
+  
+  // Join the session
+  socket.emit('join-session', sessionCode);
+});
+
+socket.on('disconnect', () => {
+  statusElem.textContent = 'Disconnected - Reconnecting...';
+  statusElem.classList.remove('connected');
+  statusElem.classList.add('disconnected');
+});
+
+socket.on('reconnect', () => {
+  statusElem.textContent = 'Connected';
+  statusElem.classList.remove('disconnected');
+  statusElem.classList.add('connected');
+  
+  // Rejoin the session
+  socket.emit('join-session', sessionCode);
+});
+socket.on('user-count', (data) => {
+  usersCountElem.textContent = `Users: ${data.count}`;
+});
+// Detect text changes and emit to server
+editor.addEventListener("input", () => {
+  socket.emit("code-update", editor.value);
+});
+
+// Listen for updates from the server
+socket.on("code-update", (content) => {
+  if (editor.value !== content) {
+      editor.value = content;
+  }
+});
+
+
 // extension badalne ka kaam
 document.getElementById('extension').innerText = '.py';
 language.addEventListener('change',()=>{
@@ -35,14 +123,6 @@ language.addEventListener('change',()=>{
 // room ID
 const urlParams = new URLSearchParams(window.location.search);
 let roomId = urlParams.get("room") || Math.random().toString(36).substr(2, 8);
-
-// generate Link
-function generateCollabLink() {
-    const collabLink = `${window.location.origin}?room=${roomId}`;
-    navigator.clipboard.writeText(collabLink).then(() => {
-        alert("Collaboration link copied to clipboard!");
-    });
-}
 
 // compilation
 function compileCode() {
@@ -88,6 +168,7 @@ async function saveCode() {
         console.error("Save cancelled or failed:", error);
     }
 }
+// Add this script to your editor.html file
 
 
 let peerConnection;
