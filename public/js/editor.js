@@ -502,3 +502,42 @@ function readFileContent(file) {
   
   reader.readAsText(file);
 }                         
+// Version COntrol -----------------------
+
+document.getElementById('commitForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const statusDiv = document.getElementById('commit_status');
+    statusDiv.innerHTML = 'Processing...';
+
+    const formData = {
+        personalAccessToken: document.getElementById('personalAccessToken').value,
+        repoOwner: document.getElementById('repoOwner').value,
+        repoName: document.getElementById('repoName').value,
+        filePath: document.getElementById('filePath').value,
+        commitMessage: document.getElementById('commitMessage').value,
+        fileContent: editor.value
+    };
+
+    try {
+        const response = await fetch('/commit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            statusDiv.innerHTML = 'Commit successful!';
+            statusDiv.style.color = 'green';
+        } else {
+            statusDiv.innerHTML = `Commit failed: ${result.message}`;
+            statusDiv.style.color = 'red';
+        }
+    } catch (error) {
+        statusDiv.innerHTML = `Error: ${error.message}`;
+        statusDiv.style.color = 'red';
+    }
+});
