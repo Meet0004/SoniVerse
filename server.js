@@ -271,6 +271,67 @@ io.on('connection', (socket) => {
     });
 });
 
+// Version control ---------------
+
+app.post('/commit', async (req, res) => {
+    try {
+        const {
+            personalAccessToken,
+            repoOwner,
+            repoName,
+            filePath,
+            commitMessage,
+            fileContent
+        } = req.body;
+
+        // First, get the current file's SHA
+        const fileResponse = await axios.get(
+            `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
+            {
+                headers: {
+                    'Authorization': `token ${personalAccessToken}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            }
+        );
+
+        // commit payloadi
+        const commitPayload = {
+            message: commitMessage,
+            content: Buffer.from(fileContent).toString('base64'),
+            sha: fileResponse.data.sha,
+            branch: 'main'
+        };
+
+        // commiting
+        const commitResponse = await axios.put(
+            `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
+            commitPayload,
+            {
+                headers: {
+                    'Authorization': `token ${personalAccessToken}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        res.json({
+            message: 'Commit successful',
+            commitData: commitResponse.data
+        });
+    } catch (error) {
+        console.error('GitHub Commit Error:', error.response ? error.response.data : error.message);
+        res.status(500).json({
+            message: error.response ? error.response.data.message : 'An error occurred',
+            error: error.response ? error.response.data : error.message
+        });
+    }
+});
+
+
+
+
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, async () => {
     console.log(`Server running on http://localhost:${PORT}`);
