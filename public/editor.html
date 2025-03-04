@@ -98,6 +98,34 @@
         </div>
     </div>
 
+    <!-- version control --->
+    <h2>Version control</h2>
+    <form id="commitForm">
+        <div class="form-group">
+            <label>Personal Access Token</label>
+            <input type="password" id="personalAccessToken" required>
+        </div>
+        <div class="form-group">
+            <label>Repository Owner</label>
+            <input type="text" id="repoOwner" required>
+        </div>
+        <div class="form-group">
+            <label>Repository Name</label>
+            <input type="text" id="repoName" required>
+        </div>
+        <div class="form-group">
+            <label>File Path</label>
+            <input type="text" id="filePath" placeholder="e.g., README.md" required>
+        </div>
+        <div class="form-group">
+            <label>Commit Message</label>
+            <input type="text" id="commitMessage" required>
+        </div>
+        <button type="submit">Commit Changes</button>
+    </form>
+
+    <div id="commit_status"></div>
+
     <script src="/js/editor.js"></script>
 </body>
 </html>
