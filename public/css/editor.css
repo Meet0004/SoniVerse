@@ -325,3 +325,24 @@ select {
   display: flex;
   align-items: center;
 }
+
+
+/*VC*/
+.form-group {
+    margin-bottom: 15px;
+}
+ input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
+}
