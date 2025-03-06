@@ -26,7 +26,7 @@ const activeSessions = new Map();
 const users = {};
 const rooms = {};
 
-// Fix CSP to allow Socket.io CDN
+// CSP to allow Socket.io CDN
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", 
         "default-src 'self'; " +
