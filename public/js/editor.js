@@ -20,8 +20,7 @@ editor.addEventListener("input", () => {
     socket.emit("text_change", editor.value);
 });
 
-
-// Initialize variables
+
 let isUpdating = false;
 const statusElem = document.getElementById('connection-status');
 const usersCountElem = document.getElementById('users-count');
@@ -29,15 +28,14 @@ const sessionCodeElem = document.getElementById('session-code');
 const copyLinkBtn = document.getElementById('copy-link');
 const copiedMessage = document.getElementById('copied-message');
 
-// Get session code from URL
+// get session code from URL
 const path = window.location.pathname;
 const sessionCode = path.split('/').pop();
 
-// Display session code
+// session codeeee
 sessionCodeElem.textContent = sessionCode;        // DONE
-
-// Copy share link functionality
-copyLinkBtn.addEventListener('click', () => {    // DONE
+
+copyLinkBtn.addEventListener('click', () => {   
   const shareLink = window.location.href;
   navigator.clipboard.writeText(shareLink).then(() => {
     copiedMessage.style.opacity = '1';
@@ -47,7 +45,7 @@ copyLinkBtn.addEventListener('click', () => {    // DONE
   });
 });
 
-// Initialize CodeMirror
+// codemirror
 // editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
 //   lineNumbers: true,
 //   theme: 'monokai',
@@ -58,7 +56,7 @@ copyLinkBtn.addEventListener('click', () => {    // DONE
 //   autofocus: true
 // });
 
-// Language selector
+
 language.addEventListener('change', (e) => {    
   const lang= e.target.value;
   editor.setOption('mode', lang);
@@ -68,13 +66,13 @@ language.addEventListener('change', (e) => {
 });
 
 
-// Join session when connected
+// join session when connected
 socket.on('connect', () => {
   statusElem.textContent = 'Connected';
   statusElem.classList.remove('disconnected');
   statusElem.classList.add('connected');
   
-  // Join the session
+  // join the session
   socket.emit('join-session', sessionCode);
 });
 
@@ -89,18 +87,18 @@ socket.on('reconnect', () => {
   statusElem.classList.remove('disconnected');
   statusElem.classList.add('connected');
   
-  // Rejoin the session
+  // rejoin the session
   socket.emit('join-session', sessionCode);
 });
 socket.on('user-count', (data) => {
   usersCountElem.textContent = `Users: ${data.count}`;
 });
-// Detect text changes and emit to server
+// detecting text changes and emit to server
 editor.addEventListener("input", () => {
   socket.emit("code-update", editor.value);
 });
 
-// Listen for updates from the server
+// listen for updates from the server
 socket.on("code-update", (content) => {
   if (editor.value !== content) {
       editor.value = content;
