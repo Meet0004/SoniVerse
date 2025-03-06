@@ -19,7 +19,7 @@ const io = new Server(server, {
     cors: { origin: "*", methods: ["GET", "POST"] }
 });
 
-// Set initial variables
+
 let url = '';
 let activeUsers = 0;
 const activeSessions = new Map();
@@ -37,24 +37,24 @@ app.use((req, res, next) => {
     next();
 });
 
-// Remove the Helmet CSP as we're using custom headers above
+// remove the Helmet CSP , we're using custom headers above
 const configureHelmet = () => {
     app.use(
         helmet({
-            contentSecurityPolicy: false, // Disable Helmet's CSP as we're using our own
+            contentSecurityPolicy: false,
         })
     );
 };
 
-// Activate Helmet without CSP
+// acivate Helmet without CSP
 configureHelmet();
 
-// Routes
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/home.html'));
 });
 
-// Generate new session
+
 app.get('/generate-session', (req, res) => {
     // random hai sab
     const sessionCode = Math.floor(10 + Math.random() * 90).toString();
