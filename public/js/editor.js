@@ -166,7 +166,6 @@ async function saveCode() {
         console.error("Save cancelled or failed:", error);
     }
 }
-// Add this script to your editor.html file
 
 
 let peerConnection;
