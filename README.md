@@ -1,5 +1,3 @@
-Here's the complete `README.md` file in proper markdown format:  
-
 # Collaborative Code Editor
 
 This project is a **real-time collaborative code editor** that supports:
