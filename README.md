@@ -5,7 +5,7 @@ This project is a **real-time collaborative code editor** that supports:
 - Mutli-user rooms - with roomID
 - Compilaton - Multi-language code compilation (Java and Python)
 - Voice chat - WebRTC-based voice calling  
-- text chat - Chat box between
+- Chat box - To share messages, images, audio, docs
 - Save code - File management (local)
 as of 03-03-2025
 
