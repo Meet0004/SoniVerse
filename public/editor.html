@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collaborative Editor</title>
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+
     <link rel="stylesheet" href="/css/editor.css">
 </head>
 <body>
+    <!-- Username with DP -->
+    <div class="username-details">
+        <img src="" alt="Developer" id="displayPicture">
+        <input type="text" id="myName" class="enterusername" readonly>
+    </div>
+
     <div class="header">
         <div>
           <span>Collaborative Code Editor</span>
@@ -23,13 +30,16 @@
           Session code: <span class="session-code" id="session-code"></span>
         </div>
         <div class="copy-container">
-          <button class="copy-link" id="copy-link">Copy Share Link</button>
-          <span class="copied" id="copied-message">Copied!</span>
+            <span class="copied" id="copied-message">Copied!</span>
+            <button class="copy-link" id="copy-link">Copy Share Link</button>
         </div>
     </div>
     
     <h2>Collaborative Editor</h2>
-    <textarea id="editor" rows="10" cols="50" class="code-editor"></textarea> <br><br>
+    <div class="code-container">
+        <textarea id="editor" rows="10" cols="50" class="code-editor"></textarea>
+    </div> 
+    <br>
     <br>
     <select id="language">
         <option value="python">Python</option>
@@ -39,10 +49,11 @@
     <button onclick="compileCode()">Run Code</button>
     <button onclick="saveCode()">Save code<span id="extension"></span></button>
     <!-- <button class="editor-button"  onclick="generateCollabLink()">Collaborative Link</i></button> -->
-    
+    <textarea id="input" rows="5" cols="50" placeholder="Enter input..."></textarea><br>
     <div id="outputkadiv">
         <p>Output : </p>
         <pre id="output">  </pre>
+        <p>Execution Time: <span id="execution-time">0 ms</span></p>
     </div>
     
     <!-- drag and drop ka kaam -->
@@ -74,15 +85,14 @@
     </div>
 
 
-    <!-- Join chat ka screen -->
+    <!-- Login Screen -->
     <div class="login-container" id="login-screen">
         <h2>Join Chat</h2>
         <input type="text" id="username-input" class="login-input" placeholder="Enter your username">
         <button id="join-button" class="login-button">Join</button>
     </div>
-    
-    
-    <!-- chat Interface -->
+  
+    <!-- Chat Interface -->
     <div class="chat-container" id="chat-screen" style="display: none;">
         <div class="users-panel">
             <div class="users-title">Online Users</div>
@@ -91,9 +101,22 @@
         <div class="chat-panel">
             <div class="messages-container" id="messages-container"></div>
             <div class="typing-indicator" id="typing-indicator"></div>
+            <div id="file-preview-container"></div>
+            <div id="audio-preview-container"></div>
             <div class="input-container">
                 <input type="text" id="message-input" placeholder="Type a message...">
+                <div class="file-upload-container">
+                    <label for="file-upload" class="file-upload-label" title="Attach file">📎</label>
+                    <input type="file" id="file-upload" accept="image/*,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                </div>
+                <div class="audio-controls">
+                    <button id="record-button" class="record-button" title="Record audio">🎤</button>
+                    <span id="audio-time" class="audio-time"></span>
+                </div>
                 <button id="send-button">Send</button>
+            </div>
+            <div class="file-upload-progress">
+                <div class="file-upload-progress-bar" id="file-upload-progress-bar"></div>
             </div>
         </div>
     </div>
@@ -121,10 +144,38 @@
             <label>Commit Message</label>
             <input type="text" id="commitMessage" required>
         </div>
+        <a id="refresh-vcdetails" type="reset"> <img src="/icons/refresh-vc.svg"></a>
         <button type="submit">Commit Changes</button>
+        <div id="commit_status"></div>
     </form>
 
-    <div id="commit_status"></div>
+
+    <div class="commit-history">
+        <p class="commit-history-title">Commit History 
+            <a id="getHistory"><img src="/icons/commit-history.svg" width="24" height="24"></a>
+        </p>
+        <div class="allHistory">
+            <section id="history-1" class="history">
+
+                <div class="dp-details">
+                    <img src="/dp/girl1.jpg" id="repoDP" width="24" height="24" class="repoDP">
+                </div>
+
+                <div class=main-details> 
+                    <div>  <span id="OwnerName">Meet0004</span>/     </div>  <button id="fill-details-btn" class="more"></button>
+                    <div> |-- <span id="RepoName">MyRepo</span> </div>    
+                    <div> |   |-- <span id="FilePath">readme.md</span>  </div>
+
+                    <div class="more2"> <span>Commit Message : </span>   <span class="left-details" id="CommitMessage"></span>   </div>
+                    <div class="more2"> <span>Commit Timings : </span>   <span class="left-details" id="CommitTimings"></span> </div>
+                </div>
+
+            </section>
+
+            <section id="history-2" class="history"> </section>
+            <section id="history-3" class="history"> </section>
+        </div>
+    </div>
 
     <script src="/js/editor.js"></script>
 </body>
