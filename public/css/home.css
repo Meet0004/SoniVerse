@@ -6,20 +6,20 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f5f5f5;
-  }
-  .container {
+}
+.container {
     max-width: 500px;
     padding: 30px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     text-align: center;
-  }
-  h1 {
+}
+h1, h3 {
     margin-top: 0;
     color: #2c3e50;
-  }
-  .button {
+}
+.button {
     padding: 12px 24px;
     background-color: #4285f4;
     color: white;
@@ -29,65 +29,73 @@ body {
     font-size: 16px;
     margin: 20px 0;
     transition: background-color 0.3s;
-  }
-  .button:hover {
+}
+.button:hover {
     background-color: #3367d6;
-  }
-  .code-display {
+}
+.code-display {
     display: none;
     margin: 20px 0;
     padding: 20px;
     background-color: #f8f9fa;
     border-radius: 4px;
     border: 1px solid #ddd;
-  }
-  .code {
+}
+.code {
     font-size: 24px;
     font-weight: bold;
     color: #4285f4;
     margin: 10px 0;
-  }
-  .link {
+}
+.link {
     margin-top: 15px;
     word-break: break-all;
-  }
-  .error {
+}
+.error {
     color: #e74c3c;
     margin-bottom: 15px;
     display: none;
-  }
-  .instructions {
+}
+.instructions {
     margin-top: 20px;
     color: #666;
     text-align: left;
-  }
-  .or-divider {
+}
+.or-divider {
     margin: 20px 0;
     display: flex;
     align-items: center;
-  }
-  .or-divider:before,
-  .or-divider:after {
+}
+.or-divider:before,
+.or-divider:after {
     content: "";
     flex: 1;
     border-bottom: 1px solid #ddd;
-  }
-  .or-divider span {
+}
+.or-divider span {
     padding: 0 10px;
     color: #666;
-  }
-  .input-group {
+}
+.input-group {
     margin: 20px 0;
-  }
-  input {
+}
+.enterusername, #join-code{
     padding: 10px;
     width: 60px;
     font-size: 18px;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 4px;
-  }
-  .join-button {
+}
+.enterusername{
+    width: 200px;
+}
+#displayPicture{
+    height:50px; width: 50px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+}
+.join-button {
     padding: 10px 20px;
     background-color: #34a853;
     color: white;
@@ -95,7 +103,14 @@ body {
     border-radius: 4px;
     cursor: pointer;
     margin-left: 10px;
-  }
-  .join-button:hover {
+}
+.join-button:hover {
     background-color: #2d9649;
-  }
+}
+.username-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap:10px;
+}
