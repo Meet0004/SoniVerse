@@ -4,6 +4,14 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
+.code-container {
+    height:30%;
+    position: relative;
+  }
+  .CodeMirror {
+    height: 100%;
+    font-size: 16px;
+  }
 .container {
     text-align: center;
 }
@@ -78,7 +86,6 @@ button {
 /********************   Chattt  ********************/   
 /********************   Chattt  ********************/   
 /********************   Chattt  ********************/   
-
 .chat-container {
     max-width: 800px;
     margin: 20px auto;
@@ -87,80 +94,80 @@ button {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.users-panel {
+  }
+  .users-panel {
     background-color: #2c3e50;
     color: white;
     padding: 15px;
-}
-.users-title {
+  }
+  .users-title {
     font-weight: bold;
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #3f5973;
-}
-.users-list {
+  }
+  .users-list {
     list-style-type: none;
     padding: 0;
-}
-.users-list li {
+  }
+  .users-list li {
     padding: 8px 0;
     border-bottom: 1px solid #3f5973;
-}
-.chat-panel {
+  }
+  .chat-panel {
     display: flex;
     flex-direction: column;
     height: 500px;
     background-color: white;
-}
-.messages-container {
+  }
+  .messages-container {
     flex: 1;
     overflow-y: auto;
     padding: 15px;
-}
-.message {
+  }
+  .message {
     margin-bottom: 10px;
     padding: 8px 15px;
     border-radius: 18px;
     max-width: 70%;
     word-wrap: break-word;
-}
-.user-message {
+  }
+  .user-message {
     background-color: #3498db;
     color: white;
     align-self: flex-end;
     margin-left: auto;
-}
-.other-message {
+  }
+  .other-message {
     background-color: #eaeaea;
     color: #333;
-}
-.system-message {
+  }
+  .system-message {
     background-color: #f9e7a8;
     color: #333;
     text-align: center;
     max-width: 100%;
     font-style: italic;
     font-size: 0.9em;
-}
-.message-info {
+  }
+  .message-info {
     font-size: 0.8em;
     font-weight: bold;
     margin-bottom: 5px;
-}
-.input-container {
+  }
+  .input-container {
     display: flex;
     padding: 10px;
     background-color: #eaeaea;
-}
-#message-input {
+  }
+  #message-input {
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     outline: none;
-}
-#send-button {
+  }
+  #send-button {
     background-color: #3498db;
     color: white;
     border: none;
@@ -168,11 +175,11 @@ button {
     margin-left: 10px;
     border-radius: 4px;
     cursor: pointer;
-}
-#send-button:hover {
+  }
+  #send-button:hover {
     background-color: #2980b9;
-}
-.login-container {
+  }
+  .login-container {
     max-width: 400px;
     margin: 100px auto;
     background-color: white;
@@ -180,16 +187,16 @@ button {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-}
-.login-input {
+  }
+  .login-input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
-}
-.login-button {
+  }
+  .login-button {
     background-color: #3498db;
     color: white;
     border: none;
@@ -197,20 +204,194 @@ button {
     width: 100%;
     border-radius: 4px;
     cursor: pointer;
-}
-.typing-indicator {
+  }
+  .typing-indicator {
     font-style: italic;
     color: #999;
     padding: 5px 15px;
     height: 20px;
-}
+  }
+  /* File sharing styles */
+  .file-upload-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+  .file-upload-label {
+    background-color: #95a5a6;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.2em;
+  }
+  .file-upload-label:hover {
+    background-color: #7f8c8d;
+  }
+  #file-upload {
+    display: none;
+  }
+  .file-preview {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+  .file-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+  }
+  .file-message {
+    display: flex;
+    flex-direction: column;
+  }
+  .file-message-image {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+  .file-message-file {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+  .file-icon {
+    font-size: 24px;
+    margin-right: 8px;
+  }
+  .file-download-link {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  .user-message .file-download-link {
+    color: white;
+  }
+  .file-upload-progress {
+    width: 100%;
+    height: 4px;
+    margin-top: 2px;
+    background-color: #ddd;
+    border-radius: 2px;
+    overflow: hidden;
+    display: none;
+  }
+  .file-upload-progress-bar {
+    height: 100%;
+    background-color: #3498db;
+    width: 0%;
+    transition: width 0.3s;
+  }
+  .attachment-badge {
+    position: relative;
+    display: inline-block;
+  }
+  .attachment-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .clear-file {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #e74c3c;
+  }
+  
+  /* Audio recording styles */
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+  .record-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .record-button:hover {
+    background-color: #c0392b;
+  }
+  .record-button.recording {
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+    }
+  }
+  .audio-time {
+    margin-left: 10px;
+    font-size: 0.8em;
+    color: #7f8c8d;
+  }
+  .audio-message {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+  .audio-player {
+    width: 100%;
+    max-width: 200px;
+    height: 40px;
+  }
+  .audio-preview {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+  .audio-preview-waveform {
+    flex: 1;
+    height: 40px;
+    background: #ddd;
+    border-radius: 4px;
+  }
+  .audio-preview-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .audio-preview-time {
+    font-size: 0.8em;
+    color: #7f8c8d;
+    min-width: 60px;
+  }
 
 /********************   DRAG AND DROPPPPPPPPPP   ********************/   
-/********************   DRAG AND DROPPPPPPPPPP   ********************/   
-/********************   DRAG AND DROPPPPPPPPPP   ********************/   
-/********************   DRAG AND DROPPPPPPPPPP   ********************/   
-/********************   DRAG AND DROPPPPPPPPPP   ********************/   
-
 .file-drop-row {
     display: flex;
     gap: 10px;
@@ -327,7 +508,7 @@ select {
 }
 
 
-/*VC*/
+/***************************** Version Control *****************************/
 .form-group {
     margin-bottom: 15px;
 }
@@ -345,4 +526,112 @@ button {
 }
 button:hover {
     background-color: #45a049;
+}
+
+/***************************** Username Header *****************************/
+.username-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap:10px;
+}
+#displayPicture{
+  height:50px; width: 50px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+}
+.enterusername{
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 150px;
+    align-items: center;
+}
+#enterusername{
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    align-items: center;
+}
+#displayPicture{
+    height:50px; width: 50px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+}
+
+/***************************** Commit message *****************************/
+.commit-history-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap:10px;
+}
+#commit_status{
+    display: inline;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+.status-message {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.show {
+    animation: fadeIn 0.5s forwards;
+}
+.hide {
+    animation: fadeOut 0.5s forwards;
+}
+
+/***************************** Commit history *****************************/
+.commit-history{
+    width:400px;
+    border:1px solid black;
+}
+.history{
+    display: flex; 
+    flex-direction: row;  
+}
+.repoDP{
+    border-radius: 25px;
+}
+.dp-details, repoDP{
+    display: flex;
+    justify-content: top;
+    align-items: top;
+}
+.history{
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+.more{
+    float: right;
+
+    background-color: #ccc;
+    height:12px;
+    width: 12px;
+    border-radius: 7.5px;
+}
+.main-details{
+    font-size:14px;
+    width:300px;
+}
+.more2{
+    font-size:12px;
+}
+#history-1, #history-2, #history-3{
+    display:none;
 }
