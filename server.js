@@ -1,4 +1,3 @@
-
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -8,7 +7,7 @@ const helmet = require('helmet');
 const ngrok = require('ngrok');
 const fs = require('fs');
 const path = require('path');
-
+const multer = require('multer');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -19,17 +18,10 @@ const io = new Server(server, {
     cors: { origin: "*", methods: ["GET", "POST"] }
 });
 
-
-let url = '';
-let activeUsers = 0;
-const activeSessions = new Map();
-const users = {};
-const rooms = {};
-
-// CSP to allow Socket.io CDN
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", 
         "default-src 'self'; " +
+        "img-src 'self' data: blob:; " + // allow base64 & Blob images
         "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.socket.io; " +
         "connect-src 'self' ws: wss: *; " +
         "style-src 'self' 'unsafe-inline';"
@@ -45,10 +37,13 @@ const configureHelmet = () => {
         })
     );
 };
+configureHelmet();   // acivate Helmet without CSP
 
-// acivate Helmet without CSP
-configureHelmet();
-
+let url = '';
+let activeUsers = 0;
+const activeSessions = new Map();
+const users = {};
+const rooms = {};
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/home.html'));
@@ -93,36 +88,86 @@ app.get('/editor/:code', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'editor.html'));
 });
 
+// compilation
+// app.post("/compile", async (req, res) => {
+//     try {
+//         const { language, code, input } = req.body;
+//         if (!code || !language)
+//             return res.status(400).json({ error: "Code or language is missing" });
 
-app.post("/compile", async (req, res) => {
-    try {
-        const { language, code } = req.body;
-        if (!code || !language)
-            return res.status(400).json({ error: "Code or language is missing" });
+//         const languageVersions = {
+//             "python": "3.10.0", 
+//             "java": "15.0.2"
+//         };
 
-        const languageVersions = {
-            "python": "3.10.0", 
-            "java": "15.0.2"
-        };
+//         if (!languageVersions[language]) {
+//             return res.status(400).json({ error: "Unsupported language" });
+//         }
 
-        if (!languageVersions[language]) {
-            return res.status(400).json({ error: "Unsupported language" });
-        }
+//         console.log(`Compiling ${language} (version ${languageVersions[language]})...`);
 
-        console.log(`Compiling ${language} (version ${languageVersions[language]})...`);
+//         const response = await axios.post("https://emkc.org/api/v2/piston/execute", {
+//             language: language,
+//             version: languageVersions[language],
+//             files: [{ name: "main", content: code }],
+//             stdin: input
+//         });
 
-        const response = await axios.post("https://emkc.org/api/v2/piston/execute", {
-            language: language,
-            version: languageVersions[language],
-            files: [{ name: "main", content: code }]
-        });
+//         console.log("Compilation successful:", response.data.run);
+//         res.json(response.data.run);
+//     } catch (error) {
+//         console.error("Compilation Error:", error.response ? error.response.data : error.message);
+//         res.status(500).json({ error: "Compilation failed" });
+//     }
+// });
 
-        console.log("Compilation successful:", response.data.run);
-        res.json(response.data.run);
-    } catch (error) {
-        console.error("Compilation Error:", error.response ? error.response.data : error.message);
-        res.status(500).json({ error: "Compilation failed" });
+const uploadDir = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+  
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+      // Create unique filename with original extension
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      const ext = path.extname(file.originalname);
+      cb(null, uniqueSuffix + ext);
     }
+  });
+  
+  const upload = multer({ 
+    storage,
+    limits: {
+      fileSize: 10 * 1024 * 1024
+    }
+  });
+  
+app.post('/upload', upload.single('file'), (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    
+    // return the file path that can be used in the client
+    const filePath = `/uploads/${req.file.filename}`;
+    let fileType = 'file';
+    
+    if (req.file.mimetype.startsWith('image/')) {
+      fileType = 'image';
+    } else if (req.file.mimetype.startsWith('audio/')) {
+      fileType = 'audio';
+    }
+    
+    const originalName = req.file.originalname;
+    
+    res.json({ 
+      success: true, 
+      filePath,
+      fileType,
+      originalName
+    });
 });
 
 
@@ -158,6 +203,7 @@ io.on('connection', (socket) => {
         io.to(code).emit('user-count', { count: session.users });
     });
     
+
     socket.on('code-update', (content) => {
         if (!sessionCode || !activeSessions.has(sessionCode)) return;
         
@@ -168,11 +214,13 @@ io.on('connection', (socket) => {
         
         socket.to(sessionCode).emit('code-update', content);
     });
+
     
     socket.on('language-change', (language) => {
         if (!sessionCode) return;
         socket.to(sessionCode).emit('language-change', language);
     });
+
     
     socket.on('join_room', (roomId) => {
         console.log("ROOM ID: ", roomId);
@@ -188,6 +236,7 @@ io.on('connection', (socket) => {
             socket.to(roomId).emit("text_change", data);
         });
     });
+
     
     socket.on("text_change", (data) => {
         if (!sessionCode) {
@@ -209,25 +258,44 @@ io.on('connection', (socket) => {
     });
     
     // --------------------- join ---------------------
+
     socket.on('join', (username) => {
         users[socket.id] = username;
         socket.broadcast.emit('message', {
             user: 'System',
             text: `${username} has joined the chat`
         });
-        
+
+        // bhejing current users list to all clients
         io.emit('usersList', Object.values(users));
     });
-    
-    // --------------------- msg ---------------------
+  
+
+    // incoming messages
     socket.on('sendMessage', (message) => {
         io.emit('message', {
             user: users[socket.id],
             text: message
         });
     });
+
+    // incoming file messages
+    socket.on('sendFile', (fileData) => {
+        io.emit('fileMessage', {
+            user: users[socket.id],
+            ...fileData
+        });
+    });
+
+    // incoming audio messages
+    socket.on('sendAudio', (audioData) => {
+        io.emit('audioMessage', {
+            user: users[socket.id],
+            ...audioData
+        });
+    });
     
-    // --------------------- typing indicator ---------------------
+    // typing indicator
     socket.on('typing', (isTyping) => {
         socket.broadcast.emit('userTyping', {
             user: users[socket.id],
@@ -284,7 +352,6 @@ app.post('/commit', async (req, res) => {
             fileContent
         } = req.body;
 
-        // First, get the current file's SHA
         const fileResponse = await axios.get(
             `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
             {
@@ -295,7 +362,7 @@ app.post('/commit', async (req, res) => {
             }
         );
 
-        // commit payloadi
+        // commit payload
         const commitPayload = {
             message: commitMessage,
             content: Buffer.from(fileContent).toString('base64'),
@@ -329,19 +396,21 @@ app.post('/commit', async (req, res) => {
     }
 });
 
-
-
-
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, async () => {
     console.log(`Server running on http://localhost:${PORT}`);
-    
+
     try {
-        url = await ngrok.connect(PORT);
-        console.log(`Public URL: ${url}`);
+        let url = await ngrok.connect(PORT);
+        console.log(`Ngrok URL: ${url}`);
+
+        // chhota the URL using TinyURL
+        let shortUrl = await axios.get(`https://tinyurl.com/api-create.php?url=${url}`);
+        console.log(`chhota URL: ${shortUrl.data}`);
         console.log(`Share this URL with others to start collaborating.`);
+
     } catch (err) {
-        console.error('Failed to start ngrok:', err);
+        console.error("Failed to start ngrok:", err);
     }
 });
 
@@ -674,4 +743,3 @@ server.listen(PORT, async () => {
 //         res.status(500).json({ error: "Compilation failed" });
 //     }
 // });
-
