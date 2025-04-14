@@ -53,3 +53,11 @@ node server.js
 
 ## License
 This project is **MIT Licensed**.
+
+## Collaboration
+I'm open to collaborating on projects that focus on **building and learning together**! If you're interested, feel free to connect with me.
+
+Connect with me using my Server:
+- **Discord:** [Join Here](https://discord.gg/QqB8srq)
+- **LinkedIn:** [Meet Soni](www.linkedin.com/in/meet-soni-tenacious)
+
